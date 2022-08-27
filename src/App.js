@@ -6,7 +6,6 @@ import { getSuggestionsByKeyword } from "./api/fetch.js";
 export default class App extends Component {
   initState() {
     this.$state = {
-      keyword: "",
       suggestionItems: [],
       suggestionItemIndex: 0,
     };
@@ -23,7 +22,6 @@ export default class App extends Component {
   mountComponent() {
     const $searchInput = this.getComponent(".SearchInput");
     new SearchInput($searchInput, {
-      keyword: this.$state.keyword,
       onInput: this.onInput.bind(this),
       ChangeIndexByKey: this.ChangeIndexByKey.bind(this),
       selectItem: this.selectItem.bind(this),
@@ -32,8 +30,6 @@ export default class App extends Component {
     const $suggestion = this.getComponent(".Suggestion");
     new Suggestion($suggestion, {
       items: this.$state.suggestionItems,
-      keyword: this.$state.keyword,
-
       suggestionItemIndex: this.$state.suggestionItemIndex,
       changeIndexByName: this.changeIndexByName.bind(this),
       selectItem: this.selectItem.bind(this),
@@ -42,13 +38,21 @@ export default class App extends Component {
 
   initApp() {}
 
-  onInput(keyword) {
-    this.setState({ keyword });
-    // console.log(keyword);
+  setState(newState) {
+    this.$state = { ...this.$state, ...newState };
 
-    if (!keyword) {
-      this.setState({ suggestionItemIndex: 0 });
-    }
+    const $suggestion = this.getComponent(".Suggestion");
+    new Suggestion($suggestion, {
+      items: this.$state.suggestionItems,
+      suggestionItemIndex: this.$state.suggestionItemIndex,
+      changeIndexByName: this.changeIndexByName.bind(this),
+      selectItem: this.selectItem.bind(this),
+    });
+  }
+
+  onInput(keyword) {
+    // this.setState({ keyword });
+    // console.log(keyword);
 
     this.setSuggestionItems(keyword);
   }
@@ -57,9 +61,14 @@ export default class App extends Component {
     if (keyword) {
       const suggestionItems = await getSuggestionsByKeyword(keyword);
       // console.log(suggestionItems);
-      this.setState({ suggestionItems });
+      this.setState({
+        suggestionItems,
+      });
     } else {
-      this.setState({ suggestionItems: [] });
+      this.setState({
+        suggestionItems: [],
+        suggestionItemIndex: 0,
+      });
     }
   }
 

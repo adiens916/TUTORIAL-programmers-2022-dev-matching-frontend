@@ -7,13 +7,13 @@ export default class SearchInput extends Component {
                 class="SearchInput__input" 
                 type="text" 
                 placeholder="프로그램 언어를 입력하세요." 
-                value="${this.$props.keyword}"
+                value=""
             >
         `;
   }
 
   initApp() {
-    this.autoFocus();
+    // this.autoFocus();
   }
 
   autoFocus() {
