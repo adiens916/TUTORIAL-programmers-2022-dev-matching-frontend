@@ -36,8 +36,6 @@ export default class App extends Component {
     });
   }
 
-  initApp() {}
-
   setState(newState) {
     this.$state = { ...this.$state, ...newState };
 
@@ -51,9 +49,6 @@ export default class App extends Component {
   }
 
   onInput(keyword) {
-    // this.setState({ keyword });
-    // console.log(keyword);
-
     this.setSuggestionItems(keyword);
   }
 

@@ -12,18 +12,6 @@ export default class SearchInput extends Component {
         `;
   }
 
-  initApp() {
-    // this.autoFocus();
-  }
-
-  autoFocus() {
-    const input = this.$target.getElementsByClassName("SearchInput__input")[0];
-    // console.log(input);
-    input.selectionStart = input.value.length;
-    input.selectionEnd = input.value.length;
-    input.focus();
-  }
-
   setEvent() {
     this.addEvent(".SearchInput__input", "input", (target) => {
       this.$props.onInput(target.value);

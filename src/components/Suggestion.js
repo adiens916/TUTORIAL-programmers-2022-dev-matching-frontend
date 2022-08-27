@@ -1,6 +1,10 @@
 import Component from "../core/Component.js";
 
 export default class Suggestion extends Component {
+  initState() {
+    this.$target.style.display = this.$props.items.length ? "block" : "none";
+  }
+
   template() {
     return `
         <ul>
@@ -15,11 +19,6 @@ export default class Suggestion extends Component {
           .join("")}
         </ul>
         `;
-  }
-
-  mountComponent() {
-    console.log(this.$target.style);
-    this.$target.style.display = this.$props.items.length ? "block" : "none";
   }
 
   highlightMatch(itemName) {

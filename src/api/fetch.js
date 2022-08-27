@@ -9,7 +9,7 @@ async function get(url) {
   try {
     const response = await fetch(`${url}`);
     if (response.ok) {
-      return response.json();
+      return await response.json();
     } else {
       console.log("Server Error");
     }
